@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet} from 'react-native';
-import Navigation from './Components/Navigation'
+import "react-native-url-polyfill/auto";
+import AppNavigation from './AppNavigation'
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Navigation />
-      <h1>Bob the builder</h1>
+      <AppNavigation></AppNavigation>
     </NavigationContainer>
   );
 } 

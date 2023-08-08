@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 const MemoryPage = () => {
   return (
     <View>
-        <Text> Journal Page Connection</Text>
+        <Text> Memory Page Connection</Text>
     </View>
   )
 }

@@ -4,8 +4,9 @@ import { View, Text } from 'react-native';
 const HomeScreen = () => {
   return (
     <View>
-        <Text> Home Page Connection</Text>
+      <Text> Connection Test </Text>
     </View>
+
   )
 }
 
