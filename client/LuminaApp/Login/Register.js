@@ -18,7 +18,7 @@ const Register = () => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{ name: 'Navigation' }],
+              routes: [{ name: 'Home' }],
             })
           );
     
