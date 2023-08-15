@@ -5,7 +5,7 @@ import { AppContext } from '../../AppContext';
 import MemoryCreator from '../MemoryPage/MemoryCreator'; 
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './JournalStyle';
-import LinearGradient from 'react-native-linear-gradient';
+import ImagePicker from 'react-native-image-picker';
 
 const JournalScreen = ({route}) => {
   //navigation to home page 
@@ -73,6 +73,26 @@ const JournalScreen = ({route}) => {
     setInput('');
   };
 
+  
+
+  const saveJournal = () => {
+    // Combine messages and photo data into a single object
+    const journalData = {
+      messages,
+      photo,
+    };
+  
+    // TODO: Implement saving journalData to a database or local storage
+    // Example: You can use AsyncStorage, SQLite, or other storage solutions
+  
+    // Clear messages and photo after saving
+    setMessages([]);
+    setPhoto(null);
+  
+    // Close the modal if it's open
+    setMemoryCreatorModalVisible(false);
+  };
+
   const returnHome = () => {
     navigation.dispatch(
       CommonActions.navigate({
@@ -91,7 +111,7 @@ const JournalScreen = ({route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Button title = "Home"  onPress={() => returnHome()}></Button>
-      <Button title="Save" onPress={() => setMemoryCreatorModalVisible(true)} />
+      <Button title="Save" onPress={saveJournal} />
 
       <ScrollView style={styles.messagesContainer}>
         {messages.map((message, index) => (

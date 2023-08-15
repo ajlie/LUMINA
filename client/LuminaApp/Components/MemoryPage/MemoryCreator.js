@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+
 
 const IMAGE_FOLDER = `${FileSystem.documentDirectory}photos/`;
 
@@ -17,6 +18,19 @@ const MemoryCreator = ({ onCreate }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  useEffect(() => {
+    const requestPermissions = async () => {
+      const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
+      const { status: mediaStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+      if (cameraStatus !== 'granted' || mediaStatus !== 'granted') {
+        console.error('Permissions not granted');
+      }
+    };
+  
+    requestPermissions();
+  }, []);
+
   //choose the image 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -30,6 +44,33 @@ const MemoryCreator = ({ onCreate }) => {
       setImagePreviewUri(result.assets[0].uri); 
     }
   };
+
+  const takeImage = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+      if (status !== 'granted') {
+        console.error('Permission denied');
+        return;
+      }
+  
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+  
+      if (!result.canceled) {
+        const selectedAsset = result.assets[0];
+        setImageUri(selectedAsset.uri);
+        setImagePreviewUri(result.assets[0].uri); 
+      }
+    } catch (error) {
+      console.error('Error capturing photo:', error);
+    }
+  };
+
 
   
   const handleCreate = async () => {
@@ -67,11 +108,15 @@ const MemoryCreator = ({ onCreate }) => {
   return (
 <View style={styles.container}>
   <Button title="Pick an image from camera roll" onPress={pickImage} />
+  <Button title = "Take a Photo" onPress={takeImage}/>
+
   {imageUri && (
     <View style={styles.imagePreview}>
       {imagePreviewUri && <Image source={{ uri: imagePreviewUri }} style={styles.previewImage} />}
     </View>
   )}
+
+  
   <TextInput placeholder="Title" value={title} onChangeText={setTitle} style={styles.input} />
   <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
   <TextInput placeholder="Description" value={description} onChangeText={setDescription} style={styles.input} />
