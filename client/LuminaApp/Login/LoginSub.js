@@ -50,17 +50,10 @@ const LoginSub = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex : 8
-    },
-    input: {
-        backgroundColor: '#3D4086'
-    },
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignContent: 'center'
-    }
+  container: {
+    flexDirection: 'column',
+    backgroundColor: 'green'
+  }
 
 })
 

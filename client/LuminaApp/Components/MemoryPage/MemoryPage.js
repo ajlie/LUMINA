@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Button, Text, Image, FlatList, ScrollView, Dimensions  } from 'react-native';
 import { TouchableOpacity, Modal } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import MemoryCreator from './MemoryCreator';
@@ -17,27 +16,7 @@ const MemoryPage = () => {
   const [memoryCreatorModalVisible, setMemoryCreatorModalVisible] = useState(false);
   const { memoriesUpdated } = useContext(AppContext);
 
-  //journal enteries saves
-  const [journalEntries, setJournalEntries] = useState([]);
 
-  //journal loading 
-  useEffect(() => {
-    const loadSavedEntries = async () => {
-      try {
-        const savedEntriesJSON = await AsyncStorage.getItem('journalMessages');
-        if (savedEntriesJSON) {
-          const savedEntries = JSON.parse(savedEntriesJSON);
-          setJournalEntries(savedEntries);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    loadSavedEntries();
-  }, []);
-
-  //loading images 
   const loadPhotos = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
@@ -63,7 +42,7 @@ const MemoryPage = () => {
     loadPhotos();
   }, [memoriesUpdated]); 
  
-  //getting image from camera roll
+  
   useEffect(() => {
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -154,6 +133,7 @@ const MemoryPage = () => {
   
   return (
     <View style={styles.container}>
+      <Button title="Add Memory" onPress={() => setMemoryCreatorModalVisible(true)} />
       <Text>Memory Page Connection</Text>
 
       <Modal
@@ -232,13 +212,7 @@ const MemoryPage = () => {
   ))}
 </ScrollView>
 
-      <View style={styles.container}>
-            {journalEntries.map((entry, index) => (
-              <View key={index} style={styles.entry}>
-                <Text>{entry.role}: {entry.content}</Text>
-              </View>
-            ))}
-          </View>
+
 
     </View>
   );

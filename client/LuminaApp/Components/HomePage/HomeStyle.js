@@ -32,6 +32,44 @@ const styles = StyleSheet.create({
       right: 0,
       left: -30,
     },
+    moon: {
+      zIndex: 0,
+      position: 'absolute',
+      left: 133,
+      top: 90,
+
+    },
+    timer: {
+      zIndex: 0,
+      position: 'absolute',
+      left: 40,
+      top: 70,
+
+    },
+    setting: {
+      zIndex: 0,
+      position: 'absolute',
+      right: 40,
+      top: 70,
+
+    },
+    date: {
+      zIndex: 0,
+      position: 'absolute',
+      left: 148,
+      top: 120,
+      textAlign: 'center',
+    },
+    dateText: {
+      fontSize: 30,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    dateNum: {
+      fontSize: 60,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
     SafeAreaView: {
       flex: 1,
       zIndex: 1 ,
@@ -44,9 +82,9 @@ const styles = StyleSheet.create({
       borderWidth: 2, // Set the border width
       paddingHorizontal: 20,
       paddingVertical: 10,
-      width: 200,
+      width: 210,
       justifyContent: 'center',
-      borderRadius: 4,
+      borderRadius: 20,
       borderWidth: 4,
       marginBottom: 20,
     
@@ -57,21 +95,27 @@ const styles = StyleSheet.create({
       borderWidth: 2, // Set the border width
       paddingHorizontal: 20,
       paddingVertical: 10,
-      width: 200,
+      width: 210,
       justifyContent: 'center',
-      borderRadius: 4,
+      borderRadius: 20,
       borderWidth: 4,
       marginBottom: 20,
-    
     },
-    buttonText: {
+    buttonTextJournal: {
+      color: 'black',
+      textAlign: 'center',
+      fontSize: 20,
+      fontWeight: '500',
+    },
+    buttonTextMemory: {
       color: 'white',
       textAlign: 'center',
       fontSize: 20,
+      fontWeight: '500',
     },
     buttonContainer: {
       flex:1,
-      top: 290,
+      top: 270,
     }
 
 });

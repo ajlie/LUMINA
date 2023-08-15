@@ -43,6 +43,12 @@ const Register = () => {
                 value={password}
                 onChangeText={setPassword}
             />
+            <TextInput
+              placeholder="Re-Enter Password"
+              secureTextEntry
+              onChangeText={setPassword}
+              style = {styles.input}
+            />
             <Button title="Register" onPress={handleRegister} />
         </View>
     </SafeAreaView>

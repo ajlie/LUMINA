@@ -13,12 +13,22 @@ const styles = StyleSheet.create({
     },
     message: {
         paddingVertical: 8,
+        borderRadius:20,
+        marginLeft: 15,
+        marginRight: 30,
+        marginBottom: 15,
     },
     userMessage: {
-        color: 'purple',
+        color: 'black',
+        borderRadius: 20,
+        fontSize: 18,
+        marginLeft: 15,
     },
     botMessage: {
-        color: 'grey',
+        color: 'white',
+        fontSize: 18,
+        marginRight: 10,
+        
     },
     inputContainer: {
         flexDirection: 'row',
@@ -48,7 +58,37 @@ const styles = StyleSheet.create({
     },
     textFiller: {
         color: 'white',
-    }
+    },
+    categories: {
+        backgroundColor: '#1F1E33',
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    title: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 10,
+    },
+    buttonContainer: {
+        top: 200,
+        flex: 1,
+        textAlign: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        padding: 10,
+        
+    },
+    startMessage: {
+        color: 'white',
+        fontSize: 18,
+        marginBottom: 20,
+        
+    },
 });
 
 export default styles;

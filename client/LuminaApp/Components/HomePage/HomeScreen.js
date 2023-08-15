@@ -1,10 +1,13 @@
 import React, {useState, useContext} from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, SafeAreaView, Button } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, SafeAreaView, Button } from 'react-native';
 import MemoryCreator from '../MemoryPage/MemoryCreator'; 
 import { AppContext } from '../../AppContext';
 import styles from './HomeStyle'
 import HomeBackground from './HomeBackground';
-import HomeLumi from './HomeLumi'
+import HomeLumi from './HomeLumi';
+import HomeMoon from './HomeMoon';
+import HomeSetting from './HomeSetting';
+import HomeTimer from './HomeTimer'
 
 
 
@@ -17,22 +20,28 @@ const HomeScreen = () => {
 <View style = {{flex: 1}}>
     <HomeBackground style={styles.background}/>
     <HomeLumi style = {styles.icon}/>
-
+    <HomeTimer style = {styles.timer}/>
+    <HomeSetting style = {styles.setting}/>
+    <HomeMoon style = {styles.moon}/>
+    <View style = {styles.date}>
+      <Text style = {styles.dateText}> August </Text>
+      <Text style = {styles.dateNum}> 15 </Text>
+    </View>
     <SafeAreaView style = {styles.SafeAreaView}>
 
     
     {/* memories button */}
     <View style = {styles.buttonContainer}>
     <TouchableOpacity
-        style={styles.journalButton}
+        style={styles.journalButton} 
         onPress={() => setMemoryCreatorModalVisible(true)}>
-        <Text style={styles.buttonText}>Add Journal</Text>
+        <Text style={styles.buttonTextJournal}>Add Journal</Text>
     </TouchableOpacity>
 
     <TouchableOpacity
         style={styles.memoryButton}
         onPress={() => setMemoryCreatorModalVisible(true)}>
-        <Text style={styles.buttonText}>Add Memory</Text>
+        <Text style={styles.buttonTextMemory}>Add Memory</Text>
     </TouchableOpacity>
     </View>
 

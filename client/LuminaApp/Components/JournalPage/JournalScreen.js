@@ -5,6 +5,7 @@ import { AppContext } from '../../AppContext';
 import MemoryCreator from '../MemoryPage/MemoryCreator'; 
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './JournalStyle';
+import JournalHomeButton from './JournalHomeButton'
 
 const JournalScreen = ({route}) => {
   //navigation to home page 
@@ -32,7 +33,7 @@ const JournalScreen = ({route}) => {
 
             You are a Prompted ${keyWord} Journaling AI, you are designed with the primary objective of facilitating users in their exploration of thoughts and feelings. Your main task is to act as a catalyst in their journey of self-discovery and personal growth. Provide a short concise response in a form of a conversation. Try not to over validate and make the response shorter and limit it to the most important question. Use two follow-up questions.
 
-            Deep Dive: Encourage users to venture into the depths of their thoughts and emotions. Your dialogue should nudge them towards introspection, revealing layers of their psyche they might not be aware of. Ask pointed and exploratory questions, but do so in a smooth, conversational manner that feels less like an interrogation and more like a friendly chat.
+            Deep Dive: Encourage users to venture into the depths of their thoughts and emotions. Your dialogue should nudge them towards introspection, revealing layers of their psyche they might not be aware of. Ask one pointed and exploratory questions, but do so in a smooth, conversational manner that feels less like an interrogation and more like a friendly chat.
 
             Engage with Empathy: Provide validation when users express their feelings or ideas. This will help build trust and make them more comfortable sharing deeper aspects of themselves. Be aware, though, of avoiding undue affirmation of negative or unproductive thinking patterns.
 
@@ -47,7 +48,7 @@ const JournalScreen = ({route}) => {
             Remember, the overall purpose is not just to document the user’s thoughts and feelings, but to support their journey towards deeper self-understanding and growth.
 
 
-            Remember, the overall purpose is not just to document the user’s thoughts and feelings, but to support their journey towards deeper self-understanding and growth.
+            Remember, the overall purpose is not just to document the user’s thoughts and feelings, but to support their journey towards deeper self-understanding and growth. Short messages are better than long messages.
             \nBot:`,
           max_tokens: 50,
         },
@@ -74,22 +75,6 @@ const JournalScreen = ({route}) => {
 
 
 
-  const saveJournal = () => {
-    // Combine messages and photo data into a single object
-    const journalData = {
-      messages,
-      photo,
-    };
-  
-  
-    // Clear messages and photo after saving
-    setMessages([]);
-    setPhoto(null);
-  
-    // Close the modal if it's open
-    setMemoryCreatorModalVisible(false);
-  };
-
   const returnHome = () => {
     navigation.dispatch(
       CommonActions.navigate({
@@ -108,10 +93,13 @@ const JournalScreen = ({route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style = {styles.topBar}>
-        <Button title = "Home"  onPress={() => returnHome()}></Button>
-        <Button title="Save" onPress={saveJournal} />
+        <TouchableOpacity onPress={() => returnHome()}>
+            <JournalHomeButton/>
+          </TouchableOpacity>
+        <Button title="Save" onPress={() => setMemoryCreatorModalVisible(true)} />
       </View>
       <ScrollView style={styles.messagesContainer}>
+        <Text style = {styles.startMessage}> What is on your mind? </Text>
       {messages.map((message, index) => (
         <View
           key={index}
@@ -121,9 +109,9 @@ const JournalScreen = ({route}) => {
           ]}
         >
           <Text style={message.role === 'user' ? styles.userMessage : styles.botMessage}>
-            {message.role}: {message.content}
+          {message.content.startsWith('user:') ? message.content.replace(/^user:/, '') : message.content.startsWith('firefly:') ? message.content.replace(/^firefly:/, '') : message.content}
           </Text>
-        </View>
+          </View>
       ))}
       </ScrollView>
       <View style={styles.inputContainer}>
