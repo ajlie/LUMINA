@@ -3,9 +3,14 @@ import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Modal, Button, S
 import axios from 'axios';
 import { AppContext } from '../../AppContext';
 import MemoryCreator from '../MemoryPage/MemoryCreator'; 
-
+import { useNavigation, CommonActions } from '@react-navigation/native';
+import styles from './JournalStyle';
+import LinearGradient from 'react-native-linear-gradient';
 
 const JournalScreen = ({route}) => {
+  //navigation to home page 
+  const navigation = useNavigation(); 
+
   //for memories overlay
   const [memoryCreatorModalVisible, setMemoryCreatorModalVisible] = useState(false);
   const { memoriesUpdated } = useContext(AppContext); // Use the context
@@ -25,13 +30,24 @@ const JournalScreen = ({route}) => {
         {
           prompt: 
             `User: ${userInput} 
-            You are a Conversational ${keyWord} Journaling AI, you are designed with the primary objective of facilitating users in their exploration of thoughts and feelings. Your main task is to act as a catalyst in their journey of self-discovery and personal growth. Provide a short concise response in a form of a conversation. Try not to validate and make the response shorter and limit it to the most important question. Don’t have multiple questions.
+
+            You are a Prompted ${keyWord} Journaling AI, you are designed with the primary objective of facilitating users in their exploration of thoughts and feelings. Your main task is to act as a catalyst in their journey of self-discovery and personal growth. Provide a short concise response in a form of a conversation. Try not to over validate and make the response shorter and limit it to the most important question. Use two follow-up questions.
+
             Deep Dive: Encourage users to venture into the depths of their thoughts and emotions. Your dialogue should nudge them towards introspection, revealing layers of their psyche they might not be aware of. Ask pointed and exploratory questions, but do so in a smooth, conversational manner that feels less like an interrogation and more like a friendly chat.
+
             Engage with Empathy: Provide validation when users express their feelings or ideas. This will help build trust and make them more comfortable sharing deeper aspects of themselves. Be aware, though, of avoiding undue affirmation of negative or unproductive thinking patterns.
+
             Reframing and Reflection: When you detect unhelpful thought patterns, guide the user towards reframing their perspective. Do not impose a new frame, but gently nudge them to see the situation from different angles. Take note of recurring themes or patterns in their entries and reflect on them.
+
             Educate and Enlighten: Where appropriate, introduce new concepts, techniques, or information that may help the user better understand their emotions and experiences. This should be done in a non-intrusive way, embedded naturally within the conversation.
+
             The Core Issue: Your goal isn’t to simply hear the user’s thoughts, but to help them uncover the core issues driving their feelings and behavior. Read between the lines, use your understanding of their past entries to discern underlying themes, and gently lead them towards these revelations.
+
             Natural Flow: The overall tone of the conversation should be easy-going, natural, and conversational. Avoid blunt, robotic responses or a list-like approach. Instead, aim for subtlety, nuance, and a gentle, guiding style.
+
+            Remember, the overall purpose is not just to document the user’s thoughts and feelings, but to support their journey towards deeper self-understanding and growth.
+
+
             Remember, the overall purpose is not just to document the user’s thoughts and feelings, but to support their journey towards deeper self-understanding and growth.
             \nBot:`,
           max_tokens: 50,
@@ -57,8 +73,26 @@ const JournalScreen = ({route}) => {
     setInput('');
   };
 
+  const returnHome = () => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'Navigate',
+      })
+    );
+
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Navigate'}],
+      })
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
+      <Button title = "Home"  onPress={() => returnHome()}></Button>
+      <Button title="Save" onPress={() => setMemoryCreatorModalVisible(true)} />
+
       <ScrollView style={styles.messagesContainer}>
         {messages.map((message, index) => (
           <View key={index} style={styles.message}>
@@ -71,14 +105,15 @@ const JournalScreen = ({route}) => {
       <View style={styles.inputContainer}>
         <TextInput
           value={input}
-          placeholder="Type your message..."
+          placeholder="What's on your mind..."
           onChangeText={(text) => setInput(text)}
           style={styles.input}
         />
         <TouchableOpacity onPress={handleSendMessage} disabled={!input}>
           <Text>Send</Text>
         </TouchableOpacity>
-        <Button title="Add Memory" onPress={() => setMemoryCreatorModalVisible(true)} />
+        
+        {/* overlay of the save function */}
         <Modal animationType="slide" transparent={true} visible={memoryCreatorModalVisible} onRequestClose={() => setMemoryCreatorModalVisible(false)}>
           <View style={styles.modal}>
             <MemoryCreator
@@ -94,43 +129,5 @@ const JournalScreen = ({route}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  messagesContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-  },
-  message: {
-    paddingVertical: 8,
-  },
-  userMessage: {
-    color: 'purple',
-  },
-  botMessage: {
-    color: 'grey',
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: 'green',
-  },
-  input: {
-    flex: 1,
-    marginRight: 10,
-  },
-  modal: {
-    flex: 1,
-    backgroundColor: 'white',
-    margin: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 30,
-  },
-});
 
 export default JournalScreen;

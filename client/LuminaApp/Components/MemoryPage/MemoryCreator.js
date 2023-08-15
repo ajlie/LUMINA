@@ -1,27 +1,37 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
 const IMAGE_FOLDER = `${FileSystem.documentDirectory}photos/`;
 
 const MemoryCreator = ({ onCreate }) => {
+  //get the image 
   const [imageUri, setImageUri] = useState(null);
+
+  //allow for preview of the image
+  const [imagePreviewUri, setImagePreviewUri] = useState(null);
+
+  //descriptions
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  //choose the image 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
     });
 
+    //shows the preview of the image 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri);
+      setImagePreviewUri(result.assets[0].uri); 
     }
   };
 
+  
   const handleCreate = async () => {
     if (!imageUri || !title || !name || !description) {
       alert('All fields are required.');
@@ -55,16 +65,21 @@ const MemoryCreator = ({ onCreate }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {imageUri && <Text>Image selected.</Text>}
-      <TextInput placeholder="Title" value={title} onChangeText={setTitle} style={styles.input} />
-      <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
-      <TextInput placeholder="Description" value={description} onChangeText={setDescription} style={styles.input} />
-      <TouchableOpacity onPress={handleCreate} style={styles.createButton}>
-        <Text style={styles.buttonText}>Create Memory</Text>
-      </TouchableOpacity>
+<View style={styles.container}>
+  <Button title="Pick an image from camera roll" onPress={pickImage} />
+  {imageUri && (
+    <View style={styles.imagePreview}>
+      {imagePreviewUri && <Image source={{ uri: imagePreviewUri }} style={styles.previewImage} />}
     </View>
+  )}
+  <TextInput placeholder="Title" value={title} onChangeText={setTitle} style={styles.input} />
+  <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
+  <TextInput placeholder="Description" value={description} onChangeText={setDescription} style={styles.input} />
+  <TouchableOpacity onPress={handleCreate} style={styles.createButton}>
+    <Text style={styles.buttonText}>Create Memory</Text>
+  </TouchableOpacity>
+</View>
+
   );
 };
 
@@ -92,6 +107,16 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+  },
+  imagePreview: {
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  previewImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 5,
   },
 });
 
