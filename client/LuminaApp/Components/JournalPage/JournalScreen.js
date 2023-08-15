@@ -5,7 +5,6 @@ import { AppContext } from '../../AppContext';
 import MemoryCreator from '../MemoryPage/MemoryCreator'; 
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from './JournalStyle';
-import ImagePicker from 'react-native-image-picker';
 
 const JournalScreen = ({route}) => {
   //navigation to home page 
@@ -16,7 +15,7 @@ const JournalScreen = ({route}) => {
   const { memoriesUpdated } = useContext(AppContext); // Use the context
 
   //gets the keyword from the journal categories page
-  const { keyWord } = route.params; 
+  const { keyWord, color } = route.params; 
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
 
@@ -73,7 +72,7 @@ const JournalScreen = ({route}) => {
     setInput('');
   };
 
-  
+
 
   const saveJournal = () => {
     // Combine messages and photo data into a single object
@@ -82,8 +81,6 @@ const JournalScreen = ({route}) => {
       photo,
     };
   
-    // TODO: Implement saving journalData to a database or local storage
-    // Example: You can use AsyncStorage, SQLite, or other storage solutions
   
     // Clear messages and photo after saving
     setMessages([]);
@@ -110,22 +107,29 @@ const JournalScreen = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button title = "Home"  onPress={() => returnHome()}></Button>
-      <Button title="Save" onPress={saveJournal} />
-
+      <View style = {styles.topBar}>
+        <Button title = "Home"  onPress={() => returnHome()}></Button>
+        <Button title="Save" onPress={saveJournal} />
+      </View>
       <ScrollView style={styles.messagesContainer}>
-        {messages.map((message, index) => (
-          <View key={index} style={styles.message}>
-            <Text style={message.role === 'user' ? styles.userMessage : styles.botMessage}>
-              {message.role}: {message.content}
-            </Text>
-          </View>
-        ))}
+      {messages.map((message, index) => (
+        <View
+          key={index}
+          style={[
+            styles.message,
+            message.role === 'user' && { backgroundColor: color},
+          ]}
+        >
+          <Text style={message.role === 'user' ? styles.userMessage : styles.botMessage}>
+            {message.role}: {message.content}
+          </Text>
+        </View>
+      ))}
       </ScrollView>
       <View style={styles.inputContainer}>
         <TextInput
           value={input}
-          placeholder="What's on your mind..."
+          placeholder="Type Away"
           onChangeText={(text) => setInput(text)}
           style={styles.input}
         />

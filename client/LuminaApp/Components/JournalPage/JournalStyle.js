@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#22234B',
     },
     messagesContainer: {
         flex: 1,                 // Adjusted flex value
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
-        backgroundColor: 'green',
+        backgroundColor: 'gray',
     },
     input: {
         flex: 1,
@@ -38,6 +39,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: 30,
     },
+    topBar: {
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        alignItems: 'center',
+        marginTop: 10,
+        flexDirection: 'row', 
+    },
+    textFiller: {
+        color: 'white',
+    }
 });
 
 export default styles;
