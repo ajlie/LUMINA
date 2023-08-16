@@ -1,8 +1,11 @@
+//creating picture memory, used across the project not only in memories
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-
+import ImageChoose from './MemoryChoosePhoto';
+import ImageTake from './MemoryTakePic'
 
 const IMAGE_FOLDER = `${FileSystem.documentDirectory}photos/`;
 
@@ -18,6 +21,7 @@ const MemoryCreator = ({ onCreate }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  //make sure to get user permission 
   useEffect(() => {
     const requestPermissions = async () => {
       const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
@@ -45,6 +49,7 @@ const MemoryCreator = ({ onCreate }) => {
     }
   };
 
+  //taking a picture
   const takeImage = async () => {
     try {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -72,9 +77,9 @@ const MemoryCreator = ({ onCreate }) => {
   };
 
 
-  
+  //makes sure there is a photo before uploading then upload
   const handleCreate = async () => {
-    if (!imageUri || !title || !name || !description) {
+    if (!imageUri) {
       alert('All fields are required.');
       return;
     }
@@ -90,25 +95,24 @@ const MemoryCreator = ({ onCreate }) => {
       });
       onCreate({
         uri: fileUri,
-        title,
-        name,
-        text: description,
       });
 
-      // Clear the input fields after creation
-      setImageUri(null);
-      setTitle('');
-      setName('');
-      setDescription('');
     } catch (error) {
       console.log("Error copying file:", error);
     }
   };
 
   return (
+
 <View style={styles.container}>
-  <Button title="Pick an image from camera roll" onPress={pickImage} />
-  <Button title = "Take a Photo" onPress={takeImage}/>
+  <View style = {styles.buttonContainer}>
+  <TouchableOpacity onPress={pickImage} style = {styles.button}>
+    <ImageChoose/>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={takeImage}>
+    <ImageTake/>
+  </TouchableOpacity>
+  </View>
 
   {imageUri && (
     <View style={styles.imagePreview}>
@@ -116,53 +120,61 @@ const MemoryCreator = ({ onCreate }) => {
     </View>
   )}
 
-  
-  <TextInput placeholder="Title" value={title} onChangeText={setTitle} style={styles.input} />
-  <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
-  <TextInput placeholder="Description" value={description} onChangeText={setDescription} style={styles.input} />
   <TouchableOpacity onPress={handleCreate} style={styles.createButton}>
-    <Text style={styles.buttonText}>Create Memory</Text>
+    <Text style={styles.buttonText}>Create</Text>
   </TouchableOpacity>
 </View>
 
   );
 };
 
+//styles || should move to a diff sheet but didnt have enough time
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: '#f5f5f5',
     borderRadius: 5,
     margin: 10,
-  },
-  input: {
-    marginVertical: 8,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    width: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
   createButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#FFEE92',
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItwems: 'center',
     marginVertical: 8,
+    left: 70,
+    marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   imagePreview: {
     alignItems: 'center',
     marginVertical: 10,
+
   },
   previewImage: {
     width: 200,
     height: 200,
     resizeMode: 'cover',
     borderRadius: 5,
+
   },
+  button: {
+    left: 50,
+    paddingRight: 80,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+  }
 });
 
 export default MemoryCreator;

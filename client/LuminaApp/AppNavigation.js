@@ -3,12 +3,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginMain from './Login/LoginMain'
 import Home from './Components/HomePage/HomeScreen'
+//although it is journal screen it shows for the journal categories instead
 import Journal from './Components/JournalPage/JournalCategories';
 import JournalScreen from './Components/JournalPage/JournalScreen';
-import LoadingScreen from './LoadingScreen';
 import Memory from './Components/MemoryPage/MemoryPage';
 import MemoryCreator from './Components/MemoryPage/MemoryCreator';
-import MemoryCalender from './Components/MemoryPage/MemoryCalender';
 import Navigate from './Components/Navigation';
 
 const Stack = createStackNavigator();
@@ -18,7 +17,6 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="LoginMain">
-      <Stack.Screen name = "LoadingScreen" component={LoadingScreen} options={{ headerShown: false }} />
       <Stack.Screen name = "LoginMain" component={LoginMain} options={{ headerShown: false }} />
       <Stack.Screen name = "Home" component={Home}  options={{ headerShown: false }}/>
       <Stack.Screen name = "Navigate" component={Navigate}  options={{ headerShown: false }}/>
@@ -26,7 +24,6 @@ const AppNavigator = () => {
       <Stack.Screen name = "JournalScreen" component={JournalScreen}  options={{ headerShown: false }}/>
       <Stack.Screen name = "Memory" component={Memory}  options={{ headerShown: false }}/>
       <Stack.Screen name = "MemoryCreate" component={MemoryCreator} options={{ headerShown: false }}/>
-      <Stack.Screen name = "MemoryCalender" component={MemoryCalender} options={{ headerShown: false }}/>
 
     </Stack.Navigator>
   );

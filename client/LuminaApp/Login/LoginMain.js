@@ -1,46 +1,71 @@
-import React, { useState } from 'react';
-import { View, Button, TouchableHighlight, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Modal, TouchableHighlight, Text, ActivityIndicator} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Register from './Register'
 import Login from './LoginSub'
 import LoginBackground from './LoginBackground'
+import LoginLumi from './LoginLumi'
 import styles from './LoginStyle'
+import LoadingBackground from './LoginLoadingBackground'
+import LoadingDeco from './LoginLoadingLumi'
 
 
 const LoginMain = () => {
     const [registerMode, setRegisterMode] = useState(false);
-    const [loginMode, setLoginMode] = useState(false);
+    const [loginMode, setLoginMode] = useState(true);
+    const [registerButton, setRegisterButton] = useState('#FFEE92');
+    const [loginButton, setLoginButton] = useState('#13043F');
+    const [loading, setLoading] = useState(true); // Initialize as true
+
+    //allows for an effect of loading screen, kinda works 
+    useEffect(() => {
+        // Simulate rendering delay
+        const renderTimer = setTimeout(() => {
+            setLoading(false); // Turn off loading after rendering
+        }, 4000);
+
+        return () => clearTimeout(renderTimer);
+    }, []);
 
     const showRegister = () => {
         setRegisterMode(true);
         setLoginMode(false);
+        setRegisterButton('#13043F');
+        setLoginButton('#FFEE92');
+
     }
 
     const showLogin = () => {
         setLoginMode(true);
         setRegisterMode(false);
+        setRegisterButton('#FFEE92');
+        setLoginButton('#13043F');
     }
 
   return (
     <View>
         <LoginBackground style = {styles.background}/>
+        <LoginLumi style = {styles.lumi}/>
+        <Text style = {styles.sloganTop}> Welcome to LUMINA </Text>
+        <Text style = {styles.slogan}> your personalized AI journal </Text>
     <SafeAreaView>
+        <View style = {styles.container}>
         <View style={styles.buttonContainer}>
-          <TouchableHighlight
-            underlayColor="#AAAAAA"
-            onPress={showRegister}
-            style={styles.button}
+        <TouchableHighlight
+            onPress={showLogin}
+            style={[styles.button, {backgroundColor: loginButton}]}
           >
-            <Text style={styles.registerButton}>Register</Text>
+            <Text style={[styles.loginButton, {color: registerMode ? 'black' : 'white'}]}>Sign In</Text>
           </TouchableHighlight>
 
           <TouchableHighlight
-            underlayColor="#DDDDDD"
-            onPress={showLogin}
-            style={styles.button}
+            onPress={showRegister}
+            style={[styles.button, {backgroundColor: registerButton}]}
           >
-            <Text style={styles.loginButton}>Login</Text>
+            <Text style={[styles.registerButton, {color: registerMode ? 'white' : 'black'}]}>Sign Up</Text>
           </TouchableHighlight>
+
+        </View>
 
           <View style = {[styles.formContainer, { height: registerMode || loginMode ? 300 : 0 }]}>
             {registerMode && <Register />}
@@ -48,6 +73,18 @@ const LoginMain = () => {
           </View>
         </View>
     </SafeAreaView>
+
+    {/* loading overlay || could not get bar working maybe a future project */}
+    <Modal visible={loading} transparent={false} animationType="slideInUp">
+      <SafeAreaView>
+        <View>
+          <LoadingBackground style = {{position: 'absolute'}}/>
+          <LoadingDeco style = {{position: 'absolute', left: 15}}/>
+            <ActivityIndicator size="large" color="#ffffff" style= {{paddingTop: 800}}/>
+        </View>
+      </SafeAreaView>
+    </Modal>
+
     </View>
   )
 }

@@ -1,12 +1,16 @@
+//styling
+
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    //main container
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20, // Adjust the padding as needed
       },
+      //modal container
       modalView: {
         flex: 1,
         marginHorizontal: 10,
@@ -16,7 +20,8 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         backgroundColor: '#39386F',
       },
-    background: {
+      //for gradient background svg
+      background: {
         position: 'absolute',
         top: 0,
         bottom: 0,
@@ -26,12 +31,14 @@ const styles = StyleSheet.create({
         height: '100%',
         zIndex: 0,
     },
+    //lumina icon svg positioning
     icon: {
       zIndex: 0,
       position: 'absolute',
       right: 0,
       left: -30,
     },
+    //moon svg positioning
     moon: {
       zIndex: 0,
       position: 'absolute',
@@ -39,6 +46,7 @@ const styles = StyleSheet.create({
       top: 90,
 
     },
+    //timer svg positioning 
     timer: {
       zIndex: 0,
       position: 'absolute',
@@ -46,6 +54,7 @@ const styles = StyleSheet.create({
       top: 70,
 
     },
+    //setting svg positioning 
     setting: {
       zIndex: 0,
       position: 'absolute',
@@ -53,6 +62,7 @@ const styles = StyleSheet.create({
       top: 70,
 
     },
+    //dates for placeholder positioning, does not work in reality
     date: {
       zIndex: 0,
       position: 'absolute',
@@ -70,12 +80,15 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontWeight: 'bold',
     },
+
+    //content container
     SafeAreaView: {
       flex: 1,
       zIndex: 1 ,
       justifyContent: 'center',
       alignItems: 'center'
     },
+    //memory button 
     memoryButton: {
       backgroundColor: 'transparent', // Set the background color to transparent
       borderColor: '#FFEE92', // Set the border color to yellow
@@ -89,6 +102,13 @@ const styles = StyleSheet.create({
       marginBottom: 20,
     
     },
+    buttonTextMemory: {
+      color: 'white',
+      textAlign: 'center',
+      fontSize: 20,
+      fontWeight: '500',
+    },
+    //journal button
     journalButton: {
       backgroundColor: '#FFEE92', // Set the background color to transparent
       borderColor: '#FFEE92', // Set the border color to yellow
@@ -107,12 +127,7 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: '500',
     },
-    buttonTextMemory: {
-      color: 'white',
-      textAlign: 'center',
-      fontSize: 20,
-      fontWeight: '500',
-    },
+    //container for both journal and memories button
     buttonContainer: {
       flex:1,
       top: 270,

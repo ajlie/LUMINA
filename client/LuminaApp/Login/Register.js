@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet} from 'react-native';
+import { View, TextInput, Text, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { registerUser } from '../API/API';
+import styles from './LoginStyle'
 
 const Register = () => {
     const navigation = useNavigation();
@@ -30,11 +31,12 @@ const Register = () => {
 
   return (
     <SafeAreaView>
-        <View style = {styles.container}>
+        <View style = {styles.registerContainer}>
             <TextInput
                 placeholder='Username'
                 value = {username}
                 onChangeText={setUsername}
+                style={styles.registerInput}
                 
             />
             <TextInput
@@ -42,24 +44,21 @@ const Register = () => {
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
+                style={styles.registerInput}
             />
             <TextInput
-              placeholder="Re-Enter Password"
+              placeholder="Confirm Password"
               secureTextEntry
               onChangeText={setPassword}
-              style = {styles.input}
+              style={styles.registerInput}
             />
-            <Button title="Register" onPress={handleRegister} />
+            <TouchableOpacity onPress={handleRegister} style = {styles.registerSubmit}>
+              <Text style = {styles.registerSubmitText}> Sign Up </Text>
+            </TouchableOpacity>
         </View>
     </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create ({
-  container: {
-    flexDirection: 'column',
-    backgroundColor: 'green'
-  }
-})
 
 export default Register

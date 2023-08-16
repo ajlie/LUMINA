@@ -1,11 +1,18 @@
-import React, { useState, useContext } from 'react';
-import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Modal, Button, StyleSheet, ScrollView } from 'react-native';
+//main journaling screen
+
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Modal, Button, ScrollView } from 'react-native';
 import axios from 'axios';
 import { AppContext } from '../../AppContext';
-import MemoryCreator from '../MemoryPage/MemoryCreator'; 
 import { useNavigation, CommonActions } from '@react-navigation/native';
+
+//for memories 
+import MemoryCreator from '../MemoryPage/MemoryCreator'; 
+
+//styles 
 import styles from './JournalStyle';
 import JournalHomeButton from './JournalHomeButton'
+import JournalSubmit from './JournalSubmit'
 
 const JournalScreen = ({route}) => {
   //navigation to home page 
@@ -20,6 +27,21 @@ const JournalScreen = ({route}) => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
 
+  //for keyboard opening 
+  const textInputRef = useRef(null);
+
+  //for focusing on text input
+  useEffect(() => {
+    textInputRef.current.focus();
+  }, []);
+
+  //for enter key to make a new line rather than closing keyboard 
+  const handleReturnKeyPress = () => {
+    setInput(input + "\n");
+  };
+
+
+  //for ai journalling, pass keyword and user input 
   const handleSendMessage = async () => {
     try {
       const userInput = input;
@@ -74,7 +96,7 @@ const JournalScreen = ({route}) => {
   };
 
 
-
+  //navigation for home 
   const returnHome = () => {
     navigation.dispatch(
       CommonActions.navigate({
@@ -92,12 +114,18 @@ const JournalScreen = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* top buttons */}
       <View style = {styles.topBar}>
         <TouchableOpacity onPress={() => returnHome()}>
             <JournalHomeButton/>
-          </TouchableOpacity>
-        <Button title="Save" onPress={() => setMemoryCreatorModalVisible(true)} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setMemoryCreatorModalVisible(true)} style = {styles.sendButton}>
+            <Text styles = {styles.sendButtonText}> Send </Text>
+        </TouchableOpacity>
       </View>
+
+      {/* for listing of the messages */}
       <ScrollView style={styles.messagesContainer}>
         <Text style = {styles.startMessage}> What is on your mind? </Text>
       {messages.map((message, index) => (
@@ -114,18 +142,32 @@ const JournalScreen = ({route}) => {
           </View>
       ))}
       </ScrollView>
+
+      {/* input bar for typing, allows to make rows as well as immediately open keyboard upon entering screen */}
       <View style={styles.inputContainer}>
         <TextInput
           value={input}
+          ref={textInputRef}
           placeholder="Type Away"
           onChangeText={(text) => setInput(text)}
           style={styles.input}
+          multiline={true}
+          numberOfLines={1}
+          returnKeyType="default" 
+          blurOnSubmit={false} 
+          onSubmitEditing={handleSendMessage} 
+          onKeyPress={(event) => {
+            if (event.nativeEvent.key === 'Enter') {
+              handleReturnKeyPress(); 
+            }
+          }}
         />
+        {/* submit button for sending message */}
         <TouchableOpacity onPress={handleSendMessage} disabled={!input}>
-          <Text>Send</Text>
+          <JournalSubmit/>
         </TouchableOpacity>
         
-        {/* overlay of the save function */}
+        {/* overlay of the save function opens to the pictures */}
         <Modal animationType="slide" transparent={true} visible={memoryCreatorModalVisible} onRequestClose={() => setMemoryCreatorModalVisible(false)}>
           <View style={styles.modal}>
             <MemoryCreator
@@ -134,9 +176,12 @@ const JournalScreen = ({route}) => {
                 setMemoryCreatorModalVisible(false);
               }}
             />
-            <Button title="Close" onPress={() => setMemoryCreatorModalVisible(false)} />
+            <TouchableOpacity onPress={() => setMemoryCreatorModalVisible(false)} >
+              <Text style = {styles.return}> Return </Text>
+            </TouchableOpacity>
           </View>
         </Modal>
+
       </View>
     </SafeAreaView>
   );

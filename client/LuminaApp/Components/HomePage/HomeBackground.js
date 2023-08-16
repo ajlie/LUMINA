@@ -1,3 +1,5 @@
+//svg of gradient background
+
 import * as React from "react";
 import Svg, { Rect, Defs, LinearGradient, Stop } from "react-native-svg";
 const SVGComponent = (props) => (

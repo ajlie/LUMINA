@@ -1,3 +1,5 @@
+//background gradient SVG
+
 import * as React from "react";
 import Svg, { Rect, Defs, LinearGradient, Stop } from "react-native-svg";
 const SVGComponent = (props) => (
@@ -9,10 +11,10 @@ const SVGComponent = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <Rect width={390} height={844} fill="url(#paint0_linear_1398_573)" />
+    <Rect width={390} height={844} fill="url(#paint0_linear_1398_783)" />
     <Defs>
       <LinearGradient
-        id="paint0_linear_1398_573"
+        id="paint0_linear_1398_783"
         x1={195}
         y1={0}
         x2={195}

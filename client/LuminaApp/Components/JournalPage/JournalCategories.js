@@ -1,13 +1,19 @@
+//journal categories page, when redirected to journal always this page
+
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Button, Text} from 'react-native';
+import { View, Text} from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+//styles 
 import styles from './JournalStyle';
 import JournalHomeButton from './JournalHomeButton'
 
 const JournalCategories = () => {
   const navigation = useNavigation(); 
+
+  //important for the passing to the AI prompt 
   const [keyWord, setKeyWord] = useState('');
 
   const returnHome = () => {
@@ -35,6 +41,7 @@ const JournalCategories = () => {
   });
 
 
+  //changes the keyword then passes to journal screen with prop
   const changeKeyWord = (keyWord) => {
     const color = keyWordColors[keyWord];
     setKeyWord(keyWord);
@@ -61,6 +68,8 @@ const JournalCategories = () => {
   return (
     <View style = {styles.categories}>
     <SafeAreaView>
+
+      {/* for home buttons and save buttons */}
       <View style = {styles.topBar}>
         <TouchableOpacity onPress={() => returnHome()}>
           <JournalHomeButton/>
@@ -68,14 +77,15 @@ const JournalCategories = () => {
       </View>
       <View style = {styles.buttonContainer}>
     
+      {/* categories text */}
+      <Text style = {styles.title}> What would you like to talk about ? </Text>
 
-      <Text style = {styles.title}> WHAT WOULD YOU LIKE TO TALK ABOUT TODAY? </Text>
-
+      {/* creates buttons for each categories with different colors based off the key made before */}
       {Object.keys(keyWordColors).map((key) => (
           <TouchableOpacity
             key={key}
             onPress={() => changeKeyWord(key)}
-            style={{ backgroundColor: keyWordColors[key], padding: 15, marginVertical: 10, borderRadius: 30, width: 160, margin: 5  }}
+            style={{ backgroundColor: keyWordColors[key], padding: 18, marginVertical: 18, borderRadius: 15, width: 160, margin: 10  }}
           >
             <Text style={{ color: 'black', textAlign: 'center', fontSize: 22 }}>{key}</Text>
           </TouchableOpacity>

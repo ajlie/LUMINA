@@ -1,3 +1,4 @@
+//journaling styles 
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -6,10 +7,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#22234B',
     },
     messagesContainer: {
-        flex: 1,                 // Adjusted flex value
+        flex: 1,                 
         paddingHorizontal: 10,
         paddingTop: 15,
-        maxHeight: '52%',        // Set the max height to 50% of the screen
+        maxHeight: '51%',       
     },
     message: {
         paddingVertical: 8,
@@ -33,16 +34,18 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
-        backgroundColor: 'gray',
+        padding: 8,
+        backgroundColor: '#828283',
+        height: 60,
     },
     input: {
         flex: 1,
         marginRight: 10,
+
     },
     modal: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#22234B',
         margin: 10,
         borderRadius: 10,
         alignItems: 'center',
@@ -51,10 +54,20 @@ const styles = StyleSheet.create({
     },
     topBar: {
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         alignItems: 'center',
         marginTop: 10,
         flexDirection: 'row', 
+        
+    },
+    sendButton: {
+        backgroundColor: '#FFD850',
+        padding: 10,
+        borderRadius: 23,
+        width: 60,
+    },
+    sendButtonText: {
+        fontSize: 70,
     },
     textFiller: {
         color: 'white',
@@ -74,13 +87,13 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     buttonContainer: {
-        top: 200,
+        top: 170,
         flex: 1,
         textAlign: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        padding: 10,
+        padding: 20,
         
     },
     startMessage: {
@@ -89,6 +102,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         
     },
+    return: {
+        color: 'white',
+        fontWeight: '300',
+        fontSize: 15,
+    }
 });
 
 export default styles;

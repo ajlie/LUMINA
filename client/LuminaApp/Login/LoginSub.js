@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet} from 'react-native';
+import { View, TextInput, TouchableOpacity, Text} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { loginUser } from '../API/API';
+import styles from './LoginStyle';
 
 const LoginSub = () => {
     const navigation = useNavigation();
@@ -28,12 +29,12 @@ const LoginSub = () => {
 
   return (
     <SafeAreaView>
-      <View style = {styles.container}>
+      <View style = {styles.loginContainer}>
         <TextInput
           placeholder='Username'
           value = {username}
           onChangeText={setUsername}
-          style = {styles.input}
+          style = {styles.loginInput}
                     
         />
         <TextInput
@@ -41,20 +42,15 @@ const LoginSub = () => {
           secureTextEntry
           value={password}
           onChangeText={setPassword}
-          style = {styles.input}
+          style = {styles.loginInput}
         />
-        <Button title="Login" onPress={handleLogin} />
+        <TouchableOpacity onPress={handleLogin} style = {styles.loginSubmit}>
+          <Text style = {styles.loginSubmitText}> Sign Up </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    backgroundColor: 'green'
-  }
-
-})
 
 export default LoginSub

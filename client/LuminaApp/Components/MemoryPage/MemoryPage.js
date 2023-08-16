@@ -1,3 +1,5 @@
+// memory page for uploads of pictures || chaotic but it works really well, should clean up in the future
+
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Button, Text, Image, FlatList, ScrollView, Dimensions  } from 'react-native';
 import { TouchableOpacity, Modal } from 'react-native';
@@ -5,7 +7,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import MemoryCreator from './MemoryCreator';
 import { AppContext } from '../../AppContext';
-
+import MemoryBackground from './MemoryBackground'
+import BackArrow from './ModalBackArrow';
+import FrontArrow from './ModalFrontArrow'
 
 const IMAGE_FOLDER = `${FileSystem.documentDirectory}photos/`;
 
@@ -16,7 +20,7 @@ const MemoryPage = () => {
   const [memoryCreatorModalVisible, setMemoryCreatorModalVisible] = useState(false);
   const { memoriesUpdated } = useContext(AppContext);
 
-
+  //gets images
   const loadPhotos = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
@@ -29,9 +33,6 @@ const MemoryPage = () => {
       const files = await FileSystem.readDirectoryAsync(IMAGE_FOLDER);
       setPhotos(files.map(file => ({
         uri: `${IMAGE_FOLDER}${file}`,
-        title: "Sample Title", // Placeholder, should be dynamic
-        name: "Sample Name",  // Placeholder, should be dynamic
-        text: "Sample Description"  // Placeholder, should be dynamic
       })));
     } catch (error) {
       console.log('Error reading directory:', error);
@@ -56,9 +57,6 @@ const MemoryPage = () => {
         const files = await FileSystem.readDirectoryAsync(IMAGE_FOLDER);
         setPhotos(files.map(file => ({
           uri: `${IMAGE_FOLDER}${file}`,
-          title: "Sample Title", // Placeholder, should be dynamic
-          name: "Sample Name",  // Placeholder, should be dynamic
-          text: "Sample Description"  // Placeholder, should be dynamic
         })));
       } catch (error) {
         console.log('Error reading directory:', error);
@@ -80,12 +78,15 @@ const MemoryPage = () => {
     return chunkedArr;
   }
   
+  //randomizes the size of the photos
   const randomSize = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-  const groupedPhotos = chunkArray(photos, 4);
+  //how many photos in each horizontal scroll
+  const groupedPhotos = chunkArray(photos, 6);
 
+  //deletes any images
   const deleteImage = async (uri) => {
     try {
       await FileSystem.deleteAsync(uri);
@@ -120,9 +121,6 @@ const MemoryPage = () => {
         });
         setPhotos(prevPhotos => [...prevPhotos, {
           uri: fileUri,
-          title: "New Photo Title", 
-          name: "User's Name",   
-          text: "New Photo Description"  
         }]);
       } catch (error) {
         console.log("Error copying file:", error);
@@ -133,9 +131,7 @@ const MemoryPage = () => {
   
   return (
     <View style={styles.container}>
-      <Button title="Add Memory" onPress={() => setMemoryCreatorModalVisible(true)} />
-      <Text>Memory Page Connection</Text>
-
+      <MemoryBackground style = {{position: 'absolute'}}/>
       <Modal
         animationType="slide"
         transparent={true}
@@ -151,7 +147,8 @@ const MemoryPage = () => {
         </View>
       </Modal>
 
-      {selectedImageIndex !== null && (
+    {/* for pop up screen to look at photos */}
+    {selectedImageIndex !== null && (
     <Modal
       animationType="slide"
       transparent={true}
@@ -159,23 +156,22 @@ const MemoryPage = () => {
       onRequestClose={() => setModalVisible(false)}
     >
       <View style={styles.modalView}>
-        <Button title="Close" onPress={() => setModalVisible(false)} />
+        <TouchableOpacity onPress={() => setModalVisible(false)}>
+          <Text style = {{color: 'white', fontWeight: 'bold', fontSize: 15}}> Close </Text>
+        </TouchableOpacity>
         <Image source={{ uri: photos[selectedImageIndex].uri }} style={styles.modalImage} />
-        <Text>Title: {photos[selectedImageIndex].title}</Text>
-        <Text>Name: {photos[selectedImageIndex].name}</Text>
-        <Text>Description: {photos[selectedImageIndex].text}</Text>
-        <Text>Photo taken on: {new Date(parseInt(photos[selectedImageIndex].uri.split('/').slice(-1)[0].split('.')[0])).toLocaleString()}</Text>
+        <Text style = {{color: 'white'}}>Photo taken on: {new Date(parseInt(photos[selectedImageIndex].uri.split('/').slice(-1)[0].split('.')[0])).toLocaleString()}</Text>
         <View style={styles.navigationButtons}>
-          <Button 
-            title="Previous" 
+          <TouchableOpacity             
             onPress={() => setSelectedImageIndex((selectedImageIndex - 1 + photos.length) % photos.length)}
-            disabled={selectedImageIndex === 0}
-          />
-          <Button 
-            title="Next" 
+            disabled={selectedImageIndex === 0}>
+              <BackArrow/>
+          </TouchableOpacity>
+          <TouchableOpacity             
             onPress={() => setSelectedImageIndex((selectedImageIndex + 1) % photos.length)}
-            disabled={selectedImageIndex === photos.length - 1}
-          />
+            disabled={selectedImageIndex === photos.length - 1}>
+              <FrontArrow/>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity 
           style={styles.deleteButtonInModal} 
@@ -190,6 +186,7 @@ const MemoryPage = () => {
     </Modal>
   )}
 
+{/* horizontal scrolls */}
 <ScrollView style={styles.scrollContainer}>
   {groupedPhotos.map((chunk, index) => (
     <View style={styles.horizontalImageContainer} key={'chunk-' + index}>
@@ -223,12 +220,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: '#fff',
   },
-  horizontalImage: {
-    width: 150, // or any size you want
-    height: 150, 
-    borderRadius: 15, // for rounded corners
-    marginHorizontal: 5,
-  },scrollContainer: {
+  scrollContainer: {
     flex: 1,
   },
   
@@ -237,29 +229,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',  // Centers the images horizontally inside the container
     justifyContent: 'center',  // Centers the images vertically inside the container
     marginBottom: 0,  // Some space after each horizontal container for better separation
+    paddingTop: 90,
+    height: 400,
   },
   
   image: {
-    margin: 5,
+    margin: 10,
     resizeMode: 'cover',
     alignItems: 'center', 
     justifyContent: 'center', 
   },
-  imageContainer: {
-    position: 'relative',
-    width: '33%',
-    height: 100,
-  },
   deleteButtonInModal: {
     marginTop: 20,
-    backgroundColor: 'red',
+    backgroundColor: '#FF7171',
     padding: 10,
     borderRadius: 15,
   },
   deleteButtonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
+    fontWeight: '500'
   },
   modalContentContainer: {
     justifyContent: 'center',
@@ -268,7 +258,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#3B3E84',
     marginHorizontal: 0,
     borderRadius: 10,
     alignItems: 'center', 

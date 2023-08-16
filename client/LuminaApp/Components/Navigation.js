@@ -2,7 +2,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './HomePage/HomeScreen';
 import MemoryScreen from './MemoryPage/MemoryPage'
-import MemoryCalender from './MemoryPage/MemoryCalender'
 import JournalScreen from './JournalPage/JournalCategories';
 import NavigationJournal from './Navigation/NavigationJournal';
 import NavigationHome from './Navigation/NavigationHome';
@@ -37,8 +36,12 @@ const Navigation = () => {
       ),
     }}
       />
-    <Tab.Screen name = "Memory" component={MemoryScreen} options={{ 
-      headerShown: false,
+    <Tab.Screen name = "AUGUST 2023" component={MemoryScreen} options={{ 
+      headerTransparent: true, // This makes the header transparent
+      headerStyle: {
+        backgroundColor: 'transparent', // Set background color to transparent
+      },
+      headerTintColor: 'white',
       tabBarLabel: '',
       tabBarIcon: ({ color, focused }) => (
         <NavigationMemory name="journal" color={color} focused={focused} />
