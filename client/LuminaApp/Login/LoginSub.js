@@ -45,7 +45,7 @@ const LoginSub = () => {
           style = {styles.loginInput}
         />
         <TouchableOpacity onPress={handleLogin} style = {styles.loginSubmit}>
-          <Text style = {styles.loginSubmitText}> Sign Up </Text>
+          <Text style = {styles.loginSubmitText}> Sign In </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

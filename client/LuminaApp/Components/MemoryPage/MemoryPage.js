@@ -7,9 +7,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import MemoryCreator from './MemoryCreator';
 import { AppContext } from '../../AppContext';
-import MemoryBackground from './MemoryBackground'
-import BackArrow from './ModalBackArrow';
-import FrontArrow from './ModalFrontArrow'
+import MemoryBackground from './SVG/MemoryBackground'
+import BackArrow from './SVG/ModalBackArrow';
+import FrontArrow from './SVG/ModalFrontArrow'
 
 const IMAGE_FOLDER = `${FileSystem.documentDirectory}photos/`;
 

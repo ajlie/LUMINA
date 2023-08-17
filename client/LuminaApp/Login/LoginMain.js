@@ -3,12 +3,17 @@ import { View, Modal, TouchableHighlight, Text, ActivityIndicator} from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Register from './Register'
 import Login from './LoginSub'
-import LoginBackground from './LoginBackground'
-import LoginLumi from './LoginLumi'
+import LoginBackground from './SVG/LoginBackground'
+import LoginLumi from './SVG/LoginLumi'
 import styles from './LoginStyle'
-import LoadingBackground from './LoginLoadingBackground'
-import LoadingDeco from './LoginLoadingLumi'
+import LoadingBackground from './SVG/LoginLoadingBackground'
+import LoadingDeco from './SVG/LoginLoadingLumi'
+import * as Font from 'expo-font'
 
+//font
+const customFonts = {
+  'Reem-Kufi': require('../fonts/static/ReemKufi-Medium.ttf'),
+};
 
 const LoginMain = () => {
     const [registerMode, setRegisterMode] = useState(false);
@@ -16,6 +21,9 @@ const LoginMain = () => {
     const [registerButton, setRegisterButton] = useState('#FFEE92');
     const [loginButton, setLoginButton] = useState('#13043F');
     const [loading, setLoading] = useState(true); // Initialize as true
+    const [fontsLoaded, setFontsLoaded] = useState(false);
+
+    //fonts
 
     //allows for an effect of loading screen, kinda works 
     useEffect(() => {
@@ -26,6 +34,19 @@ const LoginMain = () => {
 
         return () => clearTimeout(renderTimer);
     }, []);
+
+    useEffect(() => {
+      const loadFontsAsync = async () => {
+        await Font.loadAsync(customFonts);
+        setFontsLoaded(true);
+      };
+  
+      loadFontsAsync();
+    }, []);
+  
+    if (!fontsLoaded) {
+      return null;
+    }
 
     const showRegister = () => {
         setRegisterMode(true);

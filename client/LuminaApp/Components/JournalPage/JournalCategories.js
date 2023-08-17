@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //styles 
 import styles from './JournalStyle';
-import JournalHomeButton from './JournalHomeButton'
+import JournalHomeButton from './SVG/JournalHomeButton'
 
 const JournalCategories = () => {
   const navigation = useNavigation(); 
@@ -78,16 +78,16 @@ const JournalCategories = () => {
       <View style = {styles.buttonContainer}>
     
       {/* categories text */}
-      <Text style = {styles.title}> What would you like to talk about ? </Text>
+      <Text style = {[styles.title, {fontFamily: 'Reem-Kufi'}]}> What category would you like to journal under? </Text>
 
       {/* creates buttons for each categories with different colors based off the key made before */}
       {Object.keys(keyWordColors).map((key) => (
           <TouchableOpacity
             key={key}
             onPress={() => changeKeyWord(key)}
-            style={{ backgroundColor: keyWordColors[key], padding: 18, marginVertical: 18, borderRadius: 15, width: 160, margin: 10  }}
+            style={{ backgroundColor: keyWordColors[key], padding: 18, marginVertical: 18, borderRadius: 15, width: 160, margin: 10,   }}
           >
-            <Text style={{ color: 'black', textAlign: 'center', fontSize: 22 }}>{key}</Text>
+            <Text style={{ color: 'black', textAlign: 'center', fontSize: 22, fontFamily: 'Reem-Kufi' }}>{key}</Text>
           </TouchableOpacity>
         ))}
       </View>

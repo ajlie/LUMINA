@@ -18,17 +18,25 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 30,
         marginBottom: 15,
+        letterSpacing: .5,
+        fontFamily: 'Reem-Kufi',
+        
     },
     userMessage: {
         color: 'black',
         borderRadius: 20,
         fontSize: 18,
         marginLeft: 15,
+        letterSpacing: .5,
+        letterSpacing: .5,
+        fontFamily: 'Reem-Kufi',
     },
     botMessage: {
         color: 'white',
         fontSize: 18,
         marginRight: 10,
+        fontFamily: 'Reem-Kufi',
+        letterSpacing: .5,
         
     },
     inputContainer: {
@@ -41,6 +49,8 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         marginRight: 10,
+        fontFamily: 'Reem-Kufi',
+        color: 'white',
 
     },
     modal: {
@@ -67,7 +77,8 @@ const styles = StyleSheet.create({
         width: 60,
     },
     sendButtonText: {
-        fontSize: 70,
+        fontSize: 15,
+        fontFamily: 'Reem-Kufi',
     },
     textFiller: {
         color: 'white',
@@ -85,6 +96,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         padding: 10,
+        fontFamily: 'Reem-Kufi',
     },
     buttonContainer: {
         top: 170,
@@ -100,12 +112,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
         marginBottom: 20,
+        fontFamily: 'Reem-Kufi',
         
     },
     return: {
         color: 'white',
         fontWeight: '300',
-        fontSize: 15,
+        fontSize: 18,
+        fontFamily: 'Reem-Kufi',
     }
 });
 

@@ -63,20 +63,29 @@ const styles = StyleSheet.create({
 
     },
     //dates for placeholder positioning, does not work in reality
-    date: {
+    dateTextContainer: {
       zIndex: 0,
       position: 'absolute',
       left: 148,
-      top: 120,
+      top: 110,
       textAlign: 'center',
     },
     dateText: {
-      fontSize: 30,
+      fontSize: 35,
       textAlign: 'center',
       fontWeight: 'bold',
+      marginBottom: 0,
+      padding: 0,
+    },
+    dateNumContainer: {
+      zIndex: 0,
+      position: 'absolute',
+      left: 170,
+      top: 140,
+      textAlign: 'center',
     },
     dateNum: {
-      fontSize: 60,
+      fontSize: 70,
       textAlign: 'center',
       fontWeight: 'bold',
     },
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
       flex:1,
       top: 270,
-    }
+    },
 
 });
 

@@ -2,24 +2,24 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-import ImageChoose from './MemoryChoosePhoto';
-import ImageTake from './MemoryTakePic'
+import ImageChoose from './SVG/MemoryChoosePhoto';
+import ImageTake from './SVG/MemoryTakePic'
 
 const IMAGE_FOLDER = `${FileSystem.documentDirectory}photos/`;
 
 const MemoryCreator = ({ onCreate }) => {
+  //for navigation
+  const navigation = useNavigation(); 
+
   //get the image 
   const [imageUri, setImageUri] = useState(null);
 
   //allow for preview of the image
   const [imagePreviewUri, setImagePreviewUri] = useState(null);
 
-  //descriptions
-  const [title, setTitle] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
 
   //make sure to get user permission 
   useEffect(() => {
@@ -96,6 +96,21 @@ const MemoryCreator = ({ onCreate }) => {
       onCreate({
         uri: fileUri,
       });
+
+      //navigate home
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: 'Navigate',
+        })
+      );
+  
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Navigate'}],
+        })
+      );
+
 
     } catch (error) {
       console.log("Error copying file:", error);

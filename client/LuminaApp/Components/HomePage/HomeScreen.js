@@ -1,7 +1,7 @@
 //main home screen
 
 //more react things
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { View, Text, TouchableOpacity, Modal, SafeAreaView, Button } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 
@@ -11,19 +11,20 @@ import { AppContext } from '../../AppContext';
 
 //styling
 import styles from './HomeStyle'
-import HomeBackground from './HomeBackground';
-import HomeLumi from './HomeLumi';
-import HomeMoon from './HomeMoon';
-import HomeSetting from './HomeSetting';
-import HomeTimer from './HomeTimer';
-
+import HomeBackground from './SVG/HomeBackground';
+import HomeLumi from './SVG/HomeLumi';
+import HomeMoon from './SVG/HomeMoon';
+import HomeSetting from './SVG/HomeSetting';
+import HomeTimer from './SVG/HomeTimer';
 
 
 const HomeScreen = () => {
+  
   //memories for modal showing
   const [memoryCreatorModalVisible, setMemoryCreatorModalVisible] = useState(false);
   const { memoriesUpdated } = useContext(AppContext); // Use the context
 
+  // const [fontsLoaded, setFontsLoaded] = useState(false);
   //navigation to journal page 
   const navigation = useNavigation(); 
 
@@ -43,6 +44,22 @@ const HomeScreen = () => {
     );
   }
 
+  //navigating back to memories
+  const returnMemory = () => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'AUGUST 2023',
+      })
+    );
+
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'AUGUST 2023'}],
+      })
+    );
+  }
+
 
   return (
   <View style = {{flex: 1}}>
@@ -52,9 +69,11 @@ const HomeScreen = () => {
     <HomeTimer style = {styles.timer}/>
     <HomeSetting style = {styles.setting}/>
     <HomeMoon style = {styles.moon}/>
-    <View style = {styles.date}>
+    <View style = {styles.dateTextContainer}>
       <Text style = {styles.dateText}> August </Text>
-      <Text style = {styles.dateNum}> 15 </Text>
+    </View>
+    <View style = {styles.dateNumContainer}>
+    <Text style = {styles.dateNum}> 15 </Text>
     </View>
 
     {/* actual content of the page */}
@@ -72,28 +91,26 @@ const HomeScreen = () => {
     {/* memory button */}
     <TouchableOpacity
         style={styles.memoryButton}
-        onPress={() => setMemoryCreatorModalVisible(true)}>
-        <Text style={styles.buttonTextMemory}>Add Memory</Text>
+        onPress={returnMemory}>
+        <Text style={styles.buttonTextMemory}> See Memories </Text>
     </TouchableOpacity>
     </View>
     </SafeAreaView>
 
     {/* external modal for the memories */}
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={memoryCreatorModalVisible}
-      onRequestClose={() => setMemoryCreatorModalVisible(false)}
-    >
-      <View style={styles.modalView}>
-        <MemoryCreator onCreate={(newMemory) => {
-          // After creating the memory, inform other components
-          memoriesUpdated();
-          setMemoryCreatorModalVisible(false);
-        }} />
-        <Button title="Close" onPress={() => setMemoryCreatorModalVisible(false)} />
-      </View>
-    </Modal>
+        <Modal animationType="slide" transparent={true} visible={memoryCreatorModalVisible} onRequestClose={() => setMemoryCreatorModalVisible(false)}>
+          <View style={styles.modal}>
+            <MemoryCreator
+              onCreate={(newMemory) => {
+                memoriesUpdated();
+                setMemoryCreatorModalVisible(false);
+              }}
+            />
+            <TouchableOpacity onPress={() => setMemoryCreatorModalVisible(false)} >
+              <Text style = {styles.return}> Return </Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
 
     
 </View>

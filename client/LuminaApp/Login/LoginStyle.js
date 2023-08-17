@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     left: 100,
     top: 320,
     fontSize: 25,
+    fontFamily: 'Reem-Kufi',
   },
   slogan: {
     color: 'white',
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
     left: 60,
     top: 350,
     fontSize: 25,
+    fontFamily: 'Reem-Kufi',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -51,18 +53,21 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+    fontFamily: 'Reem-Kufi',
   },
   registerButton: {
     width: 150,
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Reem-Kufi',
   },
   loginButton: {
     width: 150,
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Reem-Kufi',
   },
   formContainer: {
     marginTop: 40,
@@ -85,6 +90,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
     borderBottomWidth: 2,
     marginBottom: 30,
+    fontFamily: 'Reem-Kufi',
   },
   loginSubmit: {
     backgroundColor: '#FFEE92',
@@ -98,6 +104,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Reem-Kufi',
   },
   registerContainer: {
     flexDirection: 'column',
@@ -112,6 +119,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     marginBottom: 10,
     marginBottom: 30,
+    fontFamily: 'Reem-Kufi',
   },
   registerSubmit: {
     backgroundColor: '#FFEE92',
@@ -125,6 +133,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: 'Reem-Kufi',
   },
 });
 
