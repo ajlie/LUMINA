@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     marginBottom: 30,
     fontFamily: 'Reem-Kufi',
+    color: 'white',
   },
   loginSubmit: {
     backgroundColor: '#FFEE92',
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginBottom: 30,
     fontFamily: 'Reem-Kufi',
+    color: 'white',
   },
   registerSubmit: {
     backgroundColor: '#FFEE92',

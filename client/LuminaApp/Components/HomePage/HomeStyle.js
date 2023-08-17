@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     dateTextContainer: {
       zIndex: 0,
       position: 'absolute',
-      left: 148,
+      left: 145,
       top: 110,
       textAlign: 'center',
     },
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 0,
       padding: 0,
+      fontFamily: 'Reem-Kufi'
     },
     dateNumContainer: {
       zIndex: 0,
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
       fontSize: 70,
       textAlign: 'center',
       fontWeight: 'bold',
+      fontFamily: 'Reem-Kufi'
     },
 
     //content container
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: 20,
       fontWeight: '500',
+      fontFamily: 'Reem-Kufi'
     },
     //journal button
     journalButton: {
@@ -135,6 +138,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: 20,
       fontWeight: '500',
+      fontFamily: 'Reem-Kufi'
     },
     //container for both journal and memories button
     buttonContainer: {

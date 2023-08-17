@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         fontSize: 18,
         marginLeft: 15,
+        marginRight: 15,
         letterSpacing: .5,
         letterSpacing: .5,
         fontFamily: 'Reem-Kufi',
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         fontFamily: 'Reem-Kufi',
         color: 'white',
+        fontSize: 15,
 
     },
     modal: {
